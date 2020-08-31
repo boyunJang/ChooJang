@@ -10,30 +10,38 @@ config = {
     'loss': tf.keras.losses.mean_squared_error
 }
 
-class cg():
-    def __init__(self):
-        self.config = config
-        Model = tf.keras.Sequential()
-        Model.add(tf.keras.layers.Input(shape=(28, 28, 1), batch_size=config['batch']))
-        # conv
-        for param in config['param_conv']:
-            Model.add(tf.keras.layers.Conv2D(10, param, activation=config['conv_active']))
-            if config['pooling'] == 'Max':
-                Model.add(tf.keras.layers.MaxPooling2D())
-            else:
-                Model.add(tf.keras.layers.AveragePooling2D())
+def model_build():
+    Model = tf.keras.Sequential()
+    Model.add(tf.keras.layers.Input(shape=(28, 28, 1), batch_size=config['batch']))
+    # conv
+    for param in config['param_conv']:
+        Model.add(tf.keras.layers.Conv2D(10, param, activation=config['conv_active']))
+        if config['pooling'] == 'Max':
+            Model.add(tf.keras.layers.MaxPooling2D())
+        else:
+            Model.add(tf.keras.layers.AveragePooling2D())
 
-        Model.add(tf.keras.layers.Flatten())
+    Model.add(tf.keras.layers.Flatten())
 
-        # dense
-        for (node, activation) in config['param_dense']:
-            if activation == 'relu':
-                Model.add(tf.keras.layers.Dense(node, tf.keras.activations.relu))
-            elif activation == 'softmax':
-                Model.add(tf.keras.layers.Dense(node, tf.keras.activations.softmax))
+    # dense
+    for (node, activation) in config['param_dense']:
+        if activation == 'relu':
+            Model.add(tf.keras.layers.Dense(node, tf.keras.activations.relu))
+        elif activation == 'softmax':
+            Model.add(tf.keras.layers.Dense(node, tf.keras.activations.softmax))
+
+    return Model
+
+
+if __name__ == '__main__':
+        print('시작')
+
+        # Model 구축
+        Model = model_build()
 
         Model.compile(optimizer='adam', loss=tf.keras.losses.sparse_categorical_crossentropy)
         Model.build()
+        print(1)
         Model.summary()
 
         # 데이터 구분 필요(mnist 인지 cifa 인지)
@@ -51,10 +59,3 @@ class cg():
         Model.fit(x_train, y_train, epochs=config['train_epch'], batch_size=config['batch'])
 
         Model.predict(x_test)
-
-
-if __name__=='__main__':
-    cfg = cg()
-
-
-

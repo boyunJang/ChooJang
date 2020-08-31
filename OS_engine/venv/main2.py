@@ -10,9 +10,9 @@ config = {
     'loss': tf.keras.losses.mean_squared_error
 }
 
-class cg():
+class cg(object):
     def __init__(self):
-        self.config = config
+        self.config = object
         Model = tf.keras.Sequential()
         Model.add(tf.keras.layers.Input(shape=(28, 28, 1), batch_size=config['batch']))
         # conv
@@ -53,8 +53,8 @@ class cg():
         Model.predict(x_test)
 
 
-if __name__=='__main__':
-    cfg = cg()
+# if __name__=='__main__':
+#     cfg = cg()
 
 
 
