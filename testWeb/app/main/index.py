@@ -57,4 +57,4 @@ def test():
     print('예측률 :', test_acc )
     print(str(acc)+","+str(train_time)+","+str(test_acc))
 
-    return str(acc)+","+str(train_time)+","+str(test_acc)
+    return "학습률 : "+str(round(acc,2))+", 소요시간 : "+str(round(train_time,2))+"초, 예측률 : "+str(round(test_acc,2))
